@@ -1,0 +1,15 @@
+[-----EMACS CHEATSHEET-----]
+
+
+M-x -> Run whatever command you want as long as you know its name.
+
+~Moving Keybindings~
+
+C-f -> Move the point forward
+C-b -> Move the point backwards
+M-f -> Move the point a word forwards
+M-b -> Move the point a word backwards
+
+C-n -> Move the point to the next line
+C-p -> Move the point to the previous line
+
