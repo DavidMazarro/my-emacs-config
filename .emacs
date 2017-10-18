@@ -3,7 +3,11 @@
 ;; installed packages.  Don't delete this line.  If you don't want it,
 ;; just comment it out by adding a semicolon to the start of the line.
 ;; You may delete these explanatory comments.
+(require 'package)
+(add-to-list 'package-archives
+  '("melpa" . "http://melpa.org/packages/"))
 (package-initialize)
+(elpy-enable)
 (add-hook 'window-setup-hook 'toggle-frame-fullscreen t)
 (setq mac-option-key-is-meta t)
 (setq mac-right-option-modifier nil)
@@ -12,7 +16,7 @@
   "Opens cheathseet"
   (interactive)
   (find-file-read-only "~/.emacs.d/cheatsheet")
-  )
+)
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -53,7 +57,7 @@
      ("gnu" . "http://elpa.gnu.org/packages/"))))
  '(package-selected-packages
    (quote
-    (company auto-complete rainbow-delimiters flatland-theme base16-theme monokai-theme toxi-theme)))
+    (neotree elpy company auto-complete rainbow-delimiters flatland-theme base16-theme monokai-theme toxi-theme)))
  '(pos-tip-background-color "#A6E22E")
  '(pos-tip-foreground-color "#272822")
  '(scroll-bar-mode nil)
