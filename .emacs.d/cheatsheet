@@ -1,15 +1,35 @@
 [-----EMACS CHEATSHEET-----]
-
+* means a custom keybinding.
 
 M-x -> Run whatever command you want as long as you know its name.
+* M-n -> Toggles/hides Neotree.
+* C-S-c C-S-c -> Toggles multiple-cursors. You have to select a few lines first.
 
-~Moving Keybindings~
+~Moving shortcuts~
 
-C-f -> Move the point forward
-C-b -> Move the point backwards
-M-f -> Move the point a word forwards
-M-b -> Move the point a word backwards
+C-f -> Move the point forward.
+C-b -> Move the point backwards.
+M-f -> Move the point a word forwards.
+M-b -> Move the point a word backwards.
 
-C-n -> Move the point to the next line
-C-p -> Move the point to the previous line
+C-n -> Move the point to the next line.
+C-p -> Move the point to the previous line.
+
+~Windows~
+
+C-x 0 -> Delete selected window.
+C-x 1 -> Makes the current window to be the only window.
+
+
+~Searching through Avy~
+
+C-: -> Go to with Avy: input is a single character.
+C-' -> Go to with Avy: input is two characters.
+M-s a -> Go to with Avy: input is an arbitrary number of characters (waits for 0.5s before searching).
+M-g M-g -> Go to line with Avy: no input / input is line number.
+
+
+~File-related shortcuts~
+
+C-x C-f -> Find a file (or create it if it doesn't exist).
 
