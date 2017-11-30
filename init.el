@@ -6,23 +6,75 @@
 (add-to-list 'package-archives
   '("melpa" . "http://melpa.org/packages/"))
 (package-initialize)
-(use-package all-the-icons)
+(neotree)
 (elpy-enable)
 (require 'smartparens-config)
 (show-smartparens-global-mode t)
 (add-hook 'prog-mode-hook #'smartparens-mode)
 (add-hook 'prog-mode-hook #'rainbow-delimiters-mode)
 (add-hook 'prog-mode-hook #'rainbow-mode)
-(neotree)
 (add-hook 'window-setup-hook 'toggle-frame-fullscreen t)
 (setq mac-option-key-is-meta t)
 (setq mac-right-option-modifier nil)
 (setq neo-theme (if (display-graphic-p) 'icons 'arrow))
+(tooltip-mode -1)
+(tool-bar-mode -1)
+(menu-bar-mode -1)
+(scroll-bar-mode -1)
+
+;; use-package declarations
+
+(use-package all-the-icons)
+
+(use-package yasnippet
+  :ensure t
+  :init (yas-global-mode 1)
+  :config
+  (define-key yas-minor-mode-map (kbd "<tab>") nil)
+  (define-key yas-minor-mode-map (kbd "TAB") nil)
+  (define-key yas-minor-mode-map (kbd "<C-tab>") 'yas-expand)
+  )
+
+(use-package auto-complete
+  :ensure t
+  :config (ac-config-default))
+
+(use-package company-mode
+  :init
+  (add-hook 'after-init-hook 'global-company-mode))
+
+(use-package haskell-mode
+  :ensure t
+  :mode "\\.hs\\'"
+  :config 
+  (add-hook 'haskell-mode-hook 'turn-on-haskell-doc)
+  (add-hook 'haskell-mode-hook 'turn-on-haskell-indent)
+  (add-hook 'haskell-mode-hook 'interactive-haskell-mode)
+  )
+
+(use-package magit
+  :ensure t
+  :bind (("C-x g" . magit-status)
+         ("C-x M-g" . magit-dispatch-popup))
+  )
+
+(use-package multi-term
+  :ensure t
+  :config (setq multi-term-program "/bin/zsh")
+  :bind ("M-s t" . multi-term))
+
+(use-package windmove
+  :ensure t
+  :bind (("C-c <up>" . windmove-up)
+         ("C-c <left>" . windmove-left)
+         ("C-c <right>" . windmove-right)
+         ("C-c <down>" . windmove-down))
+  )
 
 ;; misc keybindings
 
-(global-set-key (kbd "M-n") 'neotree-toggle) ;; Toggles/hides Neotree
-(global-set-key (kbd "C-c s") 'cheatsheet) ;; Loads my custom cheatsheet located in ./.emacs.d/cheatsheet
+(global-set-key (kbd "M-n t") 'neotree-toggle) ;; Toggles/hides Neotree
+(global-set-key (kbd "C-c C-s") 'cheatsheet) ;; Loads my custom cheatsheet located in ./.emacs.d/cheatsheet
 (global-set-key (kbd "C-S-c C-S-c") 'mc/edit-lines) ;; Spawn multiple-cursors on selected region
 
 ;; avy keybindings
@@ -31,7 +83,6 @@
 (global-set-key (kbd "C-'") 'avy-goto-char-2) ;; Go to with Avy (input: two chars)
 (global-set-key (kbd "M-s a") 'avy-goto-char-timer) ;; Go to with Avy (input: an arbitrary number of chars, waits for 0.5s)
 (global-set-key (kbd "M-g M-g") 'avy-goto-line) ;; Go to line (input: zero chars/line number)
-
 ;; custom functions
 
 (defun cheatsheet()
@@ -82,7 +133,7 @@
      ("gnu" . "http://elpa.gnu.org/packages/"))))
  '(package-selected-packages
    (quote
-    (smartparens avy multiple-cursors rebecca-theme jedi rainbow-mode use-package all-the-icons neotree elpy company auto-complete rainbow-delimiters flatland-theme base16-theme monokai-theme toxi-theme)))
+    (multi-term cheatsheet haskell-mode smartparens avy multiple-cursors rebecca-theme jedi rainbow-mode use-package all-the-icons neotree elpy company auto-complete rainbow-delimiters flatland-theme base16-theme monokai-theme toxi-theme)))
  '(pos-tip-background-color "#A6E22E")
  '(pos-tip-foreground-color "#272822")
  '(scroll-bar-mode nil)

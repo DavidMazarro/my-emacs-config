@@ -2,7 +2,7 @@
 * means a custom keybinding.
 
 M-x -> Run whatever command you want as long as you know its name.
-* M-n -> Toggles/hides Neotree.
+* M-n t -> Toggles/hides Neotree.
 * C-S-c C-S-c -> Toggles multiple-cursors. You have to select a few lines first.
 
 ~Moving shortcuts~
