@@ -30,6 +30,8 @@
 
 (add-hook 'window-setup-hook 'toggle-frame-fullscreen t)
 
+(setq make-backup-files nil)
+(setq backup-directory-alist '(("" . "~/.emacs.d/backup")))
 (setq mac-option-key-is-meta t)
 (setq mac-right-option-modifier nil)
 (setq neo-theme (if (display-graphic-p) 'icons 'arrow))
@@ -69,7 +71,8 @@
 ;;   :config (load-theme 'rebecca t))
 
 (use-package all-the-icons
-  :ensure t)
+  :ensure t
+  )
 
 (use-package rainbow-delimiters
   :ensure t
@@ -79,16 +82,28 @@
 
 (use-package rainbow-mode
   :ensure t
-  :mode "\\.css\\'")
+  :mode "\\.css\\'"
+  )
 
 (use-package pretty-mode
   :ensure t
   :init
-  (add-hook 'haskell-mode-hook #'pretty-mode))
+  (add-hook 'haskell-mode-hook #'pretty-mode)
+  )
 
 (use-package neotree
   :ensure t
-  :config (setq neo-theme 'icons)
+  :init
+  (setq neo-theme 'icons)
+  (neotree)
+  :bind ("M-n t" . neotree-toggle)
+  )
+
+(use-package smartparens
+  :ensure t
+  :init
+  (smartparens-global-mode t)
+  (add-hook 'prog-mode-hook #'smartparens-mode)
   )
 
 (use-package yasnippet
@@ -147,27 +162,48 @@
          ("C-c <down>" . windmove-down))
   )
 
-;; misc keybindings
+(use-package multiple-cursors
+  :ensure t
+  :bind ("C-S-c C-S-c" . mc/edit-lines)
+  )
 
-(global-set-key (kbd "M-n t") 'neotree-toggle) ;; Toggles/hides Neotree
-(global-set-key (kbd "C-c C-s") 'cheatsheet) ;; Loads my custom cheatsheet located in ./.emacs.d/cheatsheet
-(global-set-key (kbd "C-S-c C-S-c") 'mc/edit-lines) ;; Spawn multiple-cursors on selected region
+(use-package avy
+  :ensure t
+  :bind (("C-:" . avy-goto-char)
+	 ("C-'" . avy-goto-char-2)
+	 ("M-s a" . avy-goto-char-timer)
+	 ("M-g M-g" . avy-goto-line))
+  )
 
-;; avy keybindings
-
-(global-set-key (kbd "C-:") 'avy-goto-char) ;; Go to with Avy (input: a single char)
-(global-set-key (kbd "C-'") 'avy-goto-char-2) ;; Go to with Avy (input: two chars)
-(global-set-key (kbd "M-s a") 'avy-goto-char-timer) ;; Go to with Avy (input: an arbitrary number of chars, waits for 0.5s)
-(global-set-key (kbd "M-g M-g") 'avy-goto-line) ;; Go to line (input: zero chars/line number)
-;; custom functions
+;;;;;; Custom functions ;;;;;;
 
 (defun cheatsheet()
-  "Opens cheathseet"
+  "Opens a custom cheatsheet located in .emacs.d/cheatsheet"
   (interactive)
   (find-file-read-only "~/.emacs.d/cheatsheet")
   )
 
-(require 'multiple-cursors)
+(global-set-key (kbd "C-c C-s") 'cheatsheet)
+
+;; These two functions were made by @Ironjanowar
+
+(defun kill-buffers()
+  (let (buffer buffers)
+    (setq buffers (buffer-list))
+    (dotimes (i (length buffers))
+      (setq buffer (pop buffers))
+      (if (not (string-equal (buffer-name buffer) "*scratch*")) (kill-buffer buffer) nil))))
+
+(defun clean-buffers()
+       (interactive)
+       (if (yes-or-no-p "Do you really want to clean all buffers? ")
+           (kill-buffers) nil))
+
+(global-set-key (kbd "C-x C-k") 'clean-buffers)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;; ↓↓↓ Someday I should investigate and clean this mess down here ↓↓↓
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
