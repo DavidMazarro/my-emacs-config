@@ -1,3 +1,4 @@
+
 ;;; package -- Summary:
 
 ;;; Commentary:
@@ -27,11 +28,7 @@
 (require 'smartparens-config)
 (show-smartparens-global-mode t)
 
-(add-hook 'prog-mode-hook #'smartparens-mode)
-(add-hook 'prog-mode-hook #'rainbow-delimiters-mode)
-(add-hook 'prog-mode-hook #'rainbow-mode)
 (add-hook 'window-setup-hook 'toggle-frame-fullscreen t)
-(add-hook 'haskell-mode-hook #'pretty-mode)
 
 (setq mac-option-key-is-meta t)
 (setq mac-right-option-modifier nil)
@@ -43,6 +40,15 @@
 (tool-bar-mode -1)
 (menu-bar-mode -1)
 (scroll-bar-mode -1)
+
+;; This prevents the cursor from blinking 
+
+(blink-cursor-mode nil)
+
+;; This sets the Mode Line to display not just the line number
+;; but also the column number (it's not that useful but ¯\_(ツ)_/¯)
+
+(column-number-mode t)
 
 ;; use-package declarations
 
@@ -64,6 +70,21 @@
 
 (use-package all-the-icons
   :ensure t)
+
+(use-package rainbow-delimiters
+  :ensure t
+  :init
+  (add-hook 'prog-mode-hook #'rainbow-delimiters-mode)
+  )
+
+(use-package rainbow-mode
+  :ensure t
+  :mode "\\.css\\'")
+
+(use-package pretty-mode
+  :ensure t
+  :init
+  (add-hook 'haskell-mode-hook #'pretty-mode))
 
 (use-package neotree
   :ensure t
@@ -90,7 +111,8 @@
 
 (use-package auto-complete
   :ensure t
-  :config (ac-config-default))
+  :config (ac-config-default)
+  )
 
 (use-package company-mode
   :init
@@ -154,8 +176,6 @@
  ;; If there is more than one, they won't work right.
  '(ansi-color-faces-vector
    [default default default italic underline success warning error])
- '(blink-cursor-mode nil)
- '(column-number-mode t)
  '(compilation-message-face (quote default))
  '(custom-safe-themes
    (quote
