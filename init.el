@@ -23,7 +23,6 @@
   (package-install 'use-package))
 (require 'use-package)
 
-(add-to-list 'exec-path "/usr/local/bin")
 (elpy-enable)
 (require 'smartparens-config)
 (show-smartparens-global-mode t)
@@ -43,6 +42,13 @@
 (scroll-bar-mode -1)
 
 ;; use-package declarations
+
+(use-package exec-path-from-shell
+  :ensure t
+  :config
+  (when (memq window-system '(mac ns x))
+  (exec-path-from-shell-initialize))
+  )
 
 (use-package all-the-icons
   :ensure t)
@@ -137,10 +143,6 @@
  ;; If there is more than one, they won't work right.
  '(ansi-color-faces-vector
    [default default default italic underline success warning error])
- '(ansi-color-names-vector
-   ["#282936" "#ea51b2" "#ebff87" "#00f769" "#62d6e8" "#b45bcf" "#62d6e8" "#e9e9f4"])
- '(ansi-term-color-vector
-   [unspecified "#282936" "#ea51b2" "#ebff87" "#00f769" "#62d6e8" "#b45bcf" "#62d6e8" "#e9e9f4"])
  '(blink-cursor-mode nil)
  '(column-number-mode t)
  '(compilation-message-face (quote default))
@@ -172,7 +174,7 @@
      ("melpa-stable" . "http://stable.melpa.org/packages/"))))
  '(package-selected-packages
    (quote
-    (gruvbox-theme powerline pretty-mode flycheck company-jedi multi-term cheatsheet haskell-mode smartparens avy multiple-cursors rebecca-theme jedi rainbow-mode use-package all-the-icons neotree elpy company auto-complete rainbow-delimiters flatland-theme base16-theme monokai-theme toxi-theme)))
+    (exec-path-from-shell gruvbox-theme powerline pretty-mode flycheck company-jedi multi-term cheatsheet haskell-mode smartparens avy multiple-cursors rebecca-theme jedi rainbow-mode use-package all-the-icons neotree elpy company auto-complete rainbow-delimiters flatland-theme base16-theme monokai-theme toxi-theme)))
  '(pos-tip-background-color "#A6E22E")
  '(pos-tip-foreground-color "#272822")
  '(scroll-bar-mode nil)
