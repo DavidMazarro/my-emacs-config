@@ -222,6 +222,25 @@
   (hlinum-activate)
   )
 
+(use-package expand-region
+  :ensure t
+  :bind ("C-=" . er/expand-region)
+  )
+
+(use-package spaceline
+  :ensure t)
+
+(use-package spaceline-config
+  :init
+  (spaceline-emacs-theme)
+  (spaceline-all-the-icons-theme)
+  )
+
+(use-package spaceline-all-the-icons
+  :ensure t
+  :after spaceline
+  :config (spaceline-all-the-icons-theme))
+
 ;;;;;; Custom functions ;;;;;;
 
 (defun cheatsheet()
@@ -247,5 +266,3 @@
            (kill-buffers) nil))
 
 (global-set-key (kbd "C-x C-k") 'clean-buffers)
-
- 
