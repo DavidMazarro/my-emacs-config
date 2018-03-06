@@ -23,8 +23,7 @@
   (package-refresh-contents)
   (package-install 'use-package))
 (require 'use-package)
-
-(elpy-enable)
+(require 'all-the-icons)
 (require 'smartparens-config)
 (show-smartparens-global-mode t)
 
@@ -232,7 +231,6 @@
 
 (use-package spaceline-config
   :init
-  (spaceline-emacs-theme)
   (spaceline-all-the-icons-theme)
   )
 
