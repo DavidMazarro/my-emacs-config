@@ -11,6 +11,7 @@
 ;;; Code:
 
 (require 'package)
+
 (setq
  package-archives '(("gnu" . "http://elpa.gnu.org/packages/")
                     ("org" . "http://orgmode.org/elpa/")
@@ -19,20 +20,48 @@
  package-archive-priorities '(("melpa-stable" . 1)))
 
 (package-initialize)
+
 (when (not package-archive-contents)
   (package-refresh-contents)
   (package-install 'use-package))
+
+;; Mandatory packages
+
 (require 'use-package)
 (require 'all-the-icons)
-(require 'smartparens-config)
-(show-smartparens-global-mode t)
+
+(require 'smartparens-config) ;; Do I need this?
+
+;; With this Emacs starts automatically on fullscreen mode
 
 (add-hook 'window-setup-hook 'toggle-frame-fullscreen t)
 
+;; This clears the message that shows at the scratch buffer by default
+
+(setq initial-scratch-message "")
+
+;; This way I can just type 'y' instead of 'yes<RET>' to confirm
+
+(fset 'yes-or-no-p 'y-or-n-p)
+
+;; Checks if Inconsolata is on the system and uses it as a global font
+
+(when (member "Inconsolata" (font-family-list))
+  (add-to-list 'default-frame-alist '(font . "Inconsolata-13" ))
+  (set-face-attribute 'default t :font "Inconsolata-13"))
+
+;; Something to do with backups files lmao
+
 (setq make-backup-files nil)
 (setq backup-directory-alist '(("" . "~/.emacs.d/backup")))
-(setq mac-option-key-is-meta t)
-(setq mac-right-option-modifier nil)
+
+;; Settings just for macOS
+
+(setq mac-option-key-is-meta t) ;; This way I can use Alt (option) key as Meta on Mac
+(setq mac-right-option-modifier nil) ;; With this I can use the right Alt key as normally (rather than as Meta)
+
+;; What the heck was this? Something to do with neotree and all-the-icons I guess
+
 (setq neo-theme (if (display-graphic-p) 'icons 'arrow))
 
 ;; This hides the much-dreaded bars on the top of Emacs GUI
@@ -51,7 +80,7 @@
 
 (column-number-mode t)
 
-;; use-package declarations
+;;;;;; use-package declarations ;;;;;;
 
 (use-package exec-path-from-shell
   :ensure t
@@ -60,14 +89,22 @@
   (exec-path-from-shell-initialize))
   )
 
-(use-package gruvbox-theme
+(use-package doom-themes
   :ensure t
-  :config (load-theme 'gruvbox-dark-soft t)
+  :config (load-theme 'doom-one t)
+  (doom-themes-neotree-config)
+  (doom-themes-org-config)
   )
 
-;; (use-package rebecca-theme
-;;   :ensure t
-;;   :config (load-theme 'rebecca t))
+;;(use-package gruvbox-theme
+;;  :ensure t
+;;  :config (load-theme 'gruvbox-dark-soft t)
+;;  )
+
+;;(use-package rebecca-theme
+;;  :ensure t
+;;  :config (load-theme 'rebecca t)
+;;  )
 
 (use-package all-the-icons
   :ensure t
