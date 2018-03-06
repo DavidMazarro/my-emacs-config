@@ -99,6 +99,30 @@
   :bind ("M-n t" . neotree-toggle)
   )
 
+(use-package ido
+  :ensure
+  :init
+  (progn
+    (ido-mode 1)
+    (use-package ido-vertical-mode
+      :ensure t
+      :init (ido-vertical-mode 1)
+      )
+    (use-package flx-ido
+      :ensure t
+      :init (flx-ido-mode 1)
+      )
+    (use-package ido-completing-read+
+      :ensure t
+      )
+    (use-package smex
+      :ensure t
+      :init (smex-initialize)
+      :bind ("M-x" . smex)
+      )
+    )
+  )
+
 (use-package smartparens
   :ensure t
   :init
@@ -129,10 +153,26 @@
   :config (ac-config-default)
   )
 
-(use-package company-mode
+(use-package company
   :init
-  (add-hook 'after-init-hook 'global-company-mode))
+  (add-hook 'after-init-hook 'global-company-mode)
+  )
 
+(use-package tex
+  :ensure auctex
+  :config
+   (setq TeX-auto-save t)
+   (setq TeX-parse-self t)
+   (setq-default TeX-master nil)
+   (setq TeX-save-query nil)
+   (setq TeX-PDF-mode t)
+   (add-hook 'LaTeX-mode-hook 'visual-line-mode)
+   (add-hook 'LaTeX-mode-hook 'flyspell-mode)
+   (add-hook 'LaTeX-mode-hook 'LaTeX-math-mode)
+   (add-hook 'LaTeX-mode-hook 'turn-on-reftex)
+   (setq reftex-plug-into-AUCTeX t)
+   )
+  
 (use-package haskell-mode
   :ensure t
   :mode "\\.hs\\'"
@@ -173,6 +213,13 @@
 	 ("C-'" . avy-goto-char-2)
 	 ("M-s a" . avy-goto-char-timer)
 	 ("M-g M-g" . avy-goto-line))
+  )
+
+(use-package hlinum
+  :ensure t
+  :init
+  (global-linum-mode 1)
+  (hlinum-activate)
   )
 
 ;;;;;; Custom functions ;;;;;;
