@@ -1,4 +1,3 @@
-
 ;;; package -- Summary:
 
 ;;; Commentary:
@@ -60,10 +59,6 @@
 (setq mac-option-key-is-meta t) ;; This way I can use Alt (option) key as Meta on Mac
 (setq mac-right-option-modifier nil) ;; With this I can use the right Alt key as normally (rather than as Meta)
 
-;; What the heck was this? Something to do with neotree and all-the-icons I guess
-
-(setq neo-theme (if (display-graphic-p) 'icons 'arrow))
-
 ;; This hides the much-dreaded bars on the top of Emacs GUI
 
 (tooltip-mode -1)
@@ -71,7 +66,7 @@
 (menu-bar-mode -1)
 (scroll-bar-mode -1)
 
-;; This prevents the cursor from blinking 
+;; This prevents the cursor from blinking
 
 (blink-cursor-mode nil)
 
@@ -79,6 +74,16 @@
 ;; but also the column number (it's not that useful but ¯\_(ツ)_/¯)
 
 (column-number-mode t)
+
+;;
+
+;;(define-key key-translation-map (kbd ",") ", ")
+
+;;(global-unset-key (kbd ","))
+
+;; Global keybindings
+
+(global-set-key (kbd "C-;") 'comment-or-uncomment-region)
 
 ;;;;;; use-package declarations ;;;;;;
 
@@ -218,6 +223,13 @@
   (add-hook 'haskell-mode-hook 'interactive-haskell-mode)
   )
 
+(use-package elpy
+  :ensure t
+  :mode "\\.py\\'"
+  :config
+  (elpy-enable)
+  )
+
 (use-package magit
   :ensure t
   :bind (("C-x g" . magit-status)
@@ -274,7 +286,24 @@
 (use-package spaceline-all-the-icons
   :ensure t
   :after spaceline
-  :config (spaceline-all-the-icons-theme))
+  :config (spaceline-all-the-icons-theme)
+  )
+
+(use-package org
+  :mode (("\\.org$" . org-mode))
+  :config
+  (setq org-pretty-entities t
+	org-src-fontify-natively t
+	org-fontify-whole-heading-line t
+	org-fontify-done-headline t
+	org-fontify-quote-and-verse-blocks t)
+  )
+
+(use-package org-bullets
+  :ensure t
+  :config
+  (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
+  )
 
 ;;;;;; Custom functions ;;;;;;
 
@@ -301,3 +330,5 @@
            (kill-buffers) nil))
 
 (global-set-key (kbd "C-x C-k") 'clean-buffers)
+
+;;; init.el ends here
