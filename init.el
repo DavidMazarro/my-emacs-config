@@ -45,9 +45,9 @@
 
 ;; Checks if Inconsolata is on the system and uses it as a global font
 
-(when (member "Inconsolata" (font-family-list))
-  (add-to-list 'default-frame-alist '(font . "Inconsolata-13" ))
-  (set-face-attribute 'default t :font "Inconsolata-13"))
+(when (member "Comic Sans MS" (font-family-list))
+  (add-to-list 'default-frame-alist '(font . "Comic Sans MS-13"))
+  (set-face-attribute 'default t :font "Comic Sans MS-13"))
 
 ;; Something to do with backups files lmao
 
@@ -310,7 +310,7 @@
 (defun cheatsheet()
   "Opens a custom cheatsheet located in .emacs.d/cheatsheet"
   (interactive)
-  (find-file-read-only "~/.emacs.d/cheatsheet")
+  (find-file-read-only "~/.emacs.d/cheatsheet.org")
   )
 
 (global-set-key (kbd "C-c C-s") 'cheatsheet)

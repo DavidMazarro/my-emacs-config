@@ -1,0 +1,46 @@
+#+TITLE: Cheatsheet
+
+Commands highlighted in /italics/ are custom keybindings 
+(that is, they do not come by default with said package).
+
+** TODO Find a better way to highlight custom keybindings (other than italics)
+
+* Basic/misc shortcuts
++ M-x :: Run whatever command you want as long as you know its name.
++ /M-n t/ :: Toggles/hides 
++ /C-S-c C-S-c/ :: Toggles multiple-cursors. You have to select a few lines first.
++ /C-;/ :: Comments or uncomments all lines in the selected region.
+* Moving the point
++ C-f :: Move the point forward.
++ C-b :: Move the point backwards.
++ M-f :: Move the point a word forwards.
++ M-b :: Move the point a word backwards.
+
++ C-n :: Move the point to the next line.
++ C-p :: Move the point to the previous line.+ C-f :: Move the point forward.
+* Windows
++ C-x 0 :: Delete selected window.
++ C-x 4 0 :: Delete selected window while killing its buffer.
++ C-x 1 :: Makes the current window to be the only window.
++ C-x 2 :: Split selected window in two windows (above/below).
++ C-x 3 :: Split selected window in two windows (left/right).
++ C-x } :: Make selected window wider.
++ C-x { :: Make selected window narrower.
++ C-x - :: Shrink the window if its buffer doesn't need as many lines.
++ C-x + :: Balance windows (make them the same height/width).
+* Searching through Avy
++ /C-'/ :: Go to with Avy: input is a single 
++ /C-/' :: Go to with Avy: input is two characters.
++ /M-s a/ :: Go to with Avy: input is an arbitrary number of characters (waits for 0.5s before searching).
++ /M-g M-g/ :: Go to line with Avy: no input / input is line number.
+** TODO WHY DOES THE APOSTROPHE ESCAPE THE ITALICS ლ(ಠ益ಠლ)
+* File related shortcuts
++ C-x C-f :: Find a file (or create it if it doesn't exist).
+* org-mode shortcuts
++ TAB :: Fold/Unfold contents of the document.
++ M-RET :: Insert a new headline.
++ M-up/down :: Move a headline up or down.
++ M-left/right :: Promote or demote a headline.
+
++ S-left/right :: Cycle workflow (nothing -> TODO -> DONE).
++ C-c / :: Search for org thingies in the document.
