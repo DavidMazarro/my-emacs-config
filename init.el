@@ -43,11 +43,35 @@
 
 (fset 'yes-or-no-p 'y-or-n-p)
 
+;; display “lambda” as “λ”
+(global-prettify-symbols-mode 1)
+
+;; and add it to Haskell mode
+(defun pretty-lambdas-haskell ()
+  (font-lock-add-keywords
+   nil `((,(concat "\\(" (regexp-quote "\\") "\\)")
+          (0 (progn (compose-region (match-beginning 1) (match-end 1)
+                                    ,(make-char 'greek-iso8859-7 107))
+                    nil))))))
+
+(add-hook 'haskell-mode-hook 'pretty-lambdas-haskell)
+
+;; Using the Hasklig font
+
+(set-face-attribute 'default nil
+                    :family "Hasklig"
+                    :height 150
+                    :weight 'normal
+                    :width 'normal)
+
+(use-package hasklig-mode
+  :hook (haskell-mode))
+
 ;; Checks if Tamzen is on the system and uses it as a global font
 
-(when (member "Tamzen" (font-family-list))
-  (add-to-list 'default-frame-alist '(font . "Tamzen-15"))
-  (set-face-attribute 'default t :font "Tamzen-15"))
+;; (when (member "Tamzen" (font-family-list))
+;;   (add-to-list 'default-frame-alist '(font . "Tamzen-15"))
+;;   (set-face-attribute 'default t :font "Tamzen-15"))
 
 ;; Something to do with backups files lmao
 
@@ -85,6 +109,14 @@
 
 (global-set-key (kbd "C-;") 'comment-or-uncomment-region)
 
+;; Ciao Prolog
+
+(if (file-exists-p "~/.ciaoroot/master/ciao_emacs/elisp/ciao-site-file.el")
+    (load-file "~/.ciaoroot/master/ciao_emacs/elisp/ciao-site-file.el"))
+
+(require 'ciao)
+(add-to-list 'auto-mode-alist '("\\.pl\\'" . ciao-mode)) 
+
 ;;;;;; use-package declarations ;;;;;;
 
 (use-package exec-path-from-shell
@@ -99,17 +131,22 @@
 ;;   :config (load-theme 'darkokai t)
 ;;   )
 
+(use-package kaolin-themes
+  :ensure t
+  :config (load-theme 'kaolin-galaxy t)
+  )
+
 ;; (use-package doom-themes
 ;;   :ensure t
-;;   :config (load-theme 'doom-one t)
+;;   :config (load-theme 'doom-fairy-floss t)
 ;;   (doom-themes-neotree-config)
 ;;   (doom-themes-org-config)
 ;;   )
 
-(use-package gruvbox-theme
-  :ensure t
-  :config (load-theme 'gruvbox-dark-soft t)
-  )
+;; (use-package gruvbox-theme
+;;   :ensure t
+;;   :config (load-theme 'gruvbox-dark-soft t)
+;;   )
 
 ;;(use-package rebecca-theme
 ;;  :ensure t
@@ -134,15 +171,28 @@
 (use-package pretty-mode
   :ensure t
   :init
-  (add-hook 'haskell-mode-hook #'pretty-mode)
+  ;;(add-hook 'haskell-mode-hook #'pretty-mode)
+  )
+
+(use-package wrap-region
+  :ensure t
+  :config
+  (wrap-region-add-wrappers
+   '(("$" "$" nil (org-mode latex-mode))))
+  (add-hook 'org-mode-hook 'wrap-region-mode)
+  (add-hook 'latex-mode-hook 'wrap-region-mode)
   )
 
 (use-package neotree
   :ensure t
   :init
   (setq neo-theme 'icons)
-  (neotree)
   :bind ("M-n t" . neotree-toggle)
+  )
+
+(use-package lua-mode
+  :ensure t
+  :mode "\\.p8\\'"
   )
 
 (use-package ido
@@ -212,8 +262,14 @@
    (setq-default TeX-master nil)
    (setq TeX-save-query nil)
    (setq TeX-PDF-mode t)
+   (setq bibtex-dialect 'biblatex)
+   (setq LaTeX-always-use-Biber t)
    (add-hook 'LaTeX-mode-hook 'visual-line-mode)
-   (add-hook 'LaTeX-mode-hook 'flyspell-mode)
+   (add-hook 'TeX-mode-hook
+	     (lambda ()
+	       (setq TeX-command-extra-options "-shell-escape")
+	       )
+	     )
    (add-hook 'LaTeX-mode-hook 'LaTeX-math-mode)
    (add-hook 'LaTeX-mode-hook 'turn-on-reftex)
    (setq reftex-plug-into-AUCTeX t)
@@ -226,6 +282,11 @@
   (add-hook 'haskell-mode-hook 'turn-on-haskell-doc)
   (add-hook 'haskell-mode-hook 'turn-on-haskell-indent)
   (add-hook 'haskell-mode-hook 'interactive-haskell-mode)
+  )
+
+;; Intero requires Stack for working
+(use-package intero
+  :ensure t
   )
 
 (use-package elpy
@@ -303,6 +364,10 @@
 	org-fontify-whole-heading-line t
 	org-fontify-done-headline t
 	org-fontify-quote-and-verse-blocks t)
+  (add-to-list 'org-structure-template-alist
+             (list "p" (concat ":PROPERTIES:\n"
+                               "?\n"
+                               ":END:")))
   )
 
 (use-package org-bullets
@@ -343,10 +408,11 @@
  ;; If there is more than one, they won't work right.
  '(custom-safe-themes
    (quote
-    ("a19265ef7ecc16ac4579abb1635fd4e3e1185dcacbc01b7a43cf7ad107c27ced" "3e160974b9e3e1b53270d1fb5bbaf56f0c689017e177972f72584bf096efc4cc" "b9a06c75084a7744b8a38cb48bc987de10d68f0317697ccbd894b2d0aca06d2b" "3cb2d5a795e1c93d1fbc8360d6ea41f0173aa1366d334b16e1b83b996b8d9ce6" "73bff6f2ef60f8a1238a9ca666235d258e3acdeeed85d092ca532788dd7a33c4" "12b204c8fcce23885ce58e1031a137c5a14461c6c7e1db81998222f8908006af" "5f4e4c9f5de8156f964fdf8a1b8f8f659efbfeff88b38f49ce13953a84272b77" "a866134130e4393c0cad0b4f1a5b0dd580584d9cf921617eee3fd54b6f09ac37" "7666b079fc1493b74c1f0c5e6857f3cf0389696f2d9b8791c892c696ab4a9b64" "53d1bb57dadafbdebb5fbd1a57c2d53d2b4db617f3e0e05849e78a4f78df3a1b" "4e21fb654406f11ab2a628c47c1cbe53bab645d32f2c807ee2295436f09103c6" "2af26301bded15f5f9111d3a161b6bfb3f4b93ec34ffa95e42815396da9cb560" "75c5c39809c52d48cb9dcbf1694bf2d27d5f6fd053777c194e0b69d8e49031c0" default)))
+    ("ef07cb337554ffebfccff8052827c4a9d55dc2d0bc7f08804470451385d41c5c" "e95ad48fd7cb77322e89fa7df2e66282ade015866b0c675b1d5b9e6ed88649b4" "614e5089876ea69b515c50b6d7fa0a37eb7ed50fda224623ec49e1c91a0af6a1" "d1b4990bd599f5e2186c3f75769a2c5334063e9e541e37514942c27975700370" "d2e9c7e31e574bf38f4b0fb927aaff20c1e5f92f72001102758005e53d77b8c9" "a19265ef7ecc16ac4579abb1635fd4e3e1185dcacbc01b7a43cf7ad107c27ced" "3e160974b9e3e1b53270d1fb5bbaf56f0c689017e177972f72584bf096efc4cc" "b9a06c75084a7744b8a38cb48bc987de10d68f0317697ccbd894b2d0aca06d2b" "3cb2d5a795e1c93d1fbc8360d6ea41f0173aa1366d334b16e1b83b996b8d9ce6" "73bff6f2ef60f8a1238a9ca666235d258e3acdeeed85d092ca532788dd7a33c4" "12b204c8fcce23885ce58e1031a137c5a14461c6c7e1db81998222f8908006af" "5f4e4c9f5de8156f964fdf8a1b8f8f659efbfeff88b38f49ce13953a84272b77" "a866134130e4393c0cad0b4f1a5b0dd580584d9cf921617eee3fd54b6f09ac37" "7666b079fc1493b74c1f0c5e6857f3cf0389696f2d9b8791c892c696ab4a9b64" "53d1bb57dadafbdebb5fbd1a57c2d53d2b4db617f3e0e05849e78a4f78df3a1b" "4e21fb654406f11ab2a628c47c1cbe53bab645d32f2c807ee2295436f09103c6" "2af26301bded15f5f9111d3a161b6bfb3f4b93ec34ffa95e42815396da9cb560" "75c5c39809c52d48cb9dcbf1694bf2d27d5f6fd053777c194e0b69d8e49031c0" default)))
  '(package-selected-packages
    (quote
-    (firecode-theme moe-theme elpygen darkokai-theme use-package toxi-theme spaceline-all-the-icons smex smartparens rebecca-theme rainbow-mode rainbow-delimiters pretty-mode org-bullets neotree multiple-cursors multi-term monokai-theme magit jedi jdee ido-vertical-mode ido-ubiquitous hlinum helm haskell-mode gruvbox-theme flx-ido flatland-theme expand-region exec-path-from-shell esup ensime elpy doom-themes company-jedi cheatsheet base16-theme avy auctex)))
+    (hasklig-mode cyberpunk-theme kaolin-themes doom-themes list-unicode-display firecode-theme moe-theme elpygen darkokai-theme use-package toxi-theme spaceline-all-the-icons smex smartparens rebecca-theme rainbow-mode rainbow-delimiters pretty-mode org-bullets neotree multiple-cursors multi-term monokai-theme magit jedi jdee ido-vertical-mode ido-ubiquitous hlinum helm haskell-mode gruvbox-theme flx-ido flatland-theme expand-region exec-path-from-shell esup ensime elpy company-jedi cheatsheet base16-theme avy auctex)))
+ '(safe-local-variable-values (quote ((TeX-command-extra-options . "-shell-escape"))))
  '(spaceline-all-the-icons-separator-type (quote slant))
  '(spaceline-all-the-icons-separators-invert-direction t))
 (custom-set-faces
@@ -355,3 +421,8 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  )
+
+; @begin(34194479)@ - Do not edit these lines - added automatically!
+(if (file-exists-p "/Users/davidmazarro/.ciaoroot/master/ciao_emacs/elisp/ciao-site-file.el")
+  (load-file "/Users/davidmazarro/.ciaoroot/master/ciao_emacs/elisp/ciao-site-file.el"))
+; @end(34194479)@ - End of automatically added lines.
