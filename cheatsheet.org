@@ -57,3 +57,9 @@ Commands highlighted in /italics/ are custom keybindings
 * AUCTeX/LaTeX shortcuts
 + C-c C-c :: Compile current .tex
 
+* Magit shortcuts
++ C-x g :: git status
++ M-n/M-p :: Move between sections at the same level
++ g :: Refresh the status buffer
++ d :: Diff popup
+

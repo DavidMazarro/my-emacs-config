@@ -31,6 +31,11 @@
 
 (require 'smartparens-config) ;; Do I need this?
 
+;; scroll one line at a time (less "jumpy" than defaults)    
+(setq mouse-wheel-scroll-amount '(1 ((shift) . 1))) ;; one line at a time
+(setq mouse-wheel-progressive-speed nil) ;; don't accelerate scrolling
+(setq mouse-wheel-follow-mouse 't) ;; scroll window under mouse
+
 ;; With this Emacs starts automatically on fullscreen mode
 
 (add-hook 'window-setup-hook 'toggle-frame-fullscreen t)
@@ -59,7 +64,7 @@
 ;; Using the Hasklig font
 
 (set-face-attribute 'default nil
-                    :family "Hasklig"
+		    :family "Hasklig"
                     :height 150
                     :weight 'normal
                     :width 'normal)
@@ -126,6 +131,14 @@
   (exec-path-from-shell-initialize))
   )
 
+(use-package random-splash-image
+  :ensure t
+  :config
+  (setq random-splash-image-dir (concat (getenv "HOME") "/.emacs.d/splash-images"))
+  (random-splash-image-set)
+  )
+
+
 ;; (use-package darkokai-theme
 ;;   :ensure t
 ;;   :config (load-theme 'darkokai t)
@@ -155,6 +168,32 @@
 
 (use-package all-the-icons
   :ensure t
+  )
+
+(use-package restart-emacs
+  :ensure t
+  )
+
+; symon is for system resource monitoring in the minibuffer 
+(use-package symon
+  :ensure t
+  :init (symon-mode)
+  :config
+  (setq symon-sparkline-type 'boxed)
+  )
+
+(use-package visual-regexp-steroids
+  :ensure t
+  :config
+  (define-key global-map (kbd "C-c r") 'vr/replace)
+  (define-key global-map (kbd "C-c q") 'vr/query-replace)
+  ;; if you use multiple-cursors, this is for you:
+  (define-key global-map (kbd "C-c m") 'vr/mc-mark)
+  ;; to use visual-regexp-steroids's isearch instead of the built-in regexp isearch, also include the following lines:
+  ;; (define-key esc-map (kbd "C-r") 'vr/isearch-backward) ;; C-M-r
+  ;; (define-key esc-map (kbd "C-s") 'vr/isearch-forward) ;; C-M-s
+  (define-key global-map (kbd "C-r") 'vr/isearch-backward)
+  (define-key global-map (kbd "C-s") 'vr/isearch-forward)
   )
 
 (use-package rainbow-delimiters
@@ -282,11 +321,8 @@
   (add-hook 'haskell-mode-hook 'turn-on-haskell-doc)
   (add-hook 'haskell-mode-hook 'turn-on-haskell-indent)
   (add-hook 'haskell-mode-hook 'interactive-haskell-mode)
-  )
-
-;; Intero requires Stack for working
-(use-package intero
-  :ensure t
+  ;; if not present, remove structured-haskell-mode hook
+  (add-hook 'haskell-mode-hook 'structured-haskell-mode)
   )
 
 (use-package elpy
@@ -300,6 +336,10 @@
   :ensure t
   :bind (("C-x g" . magit-status)
          ("C-x M-g" . magit-dispatch-popup))
+  :config
+  ; This hook updates the magit status buffer every file save,
+  ; disable in case of poor performance
+  (add-hook 'after-save-hook 'magit-after-save-refresh-status t)
   )
 
 (use-package multi-term
@@ -411,10 +451,13 @@
     ("ef07cb337554ffebfccff8052827c4a9d55dc2d0bc7f08804470451385d41c5c" "e95ad48fd7cb77322e89fa7df2e66282ade015866b0c675b1d5b9e6ed88649b4" "614e5089876ea69b515c50b6d7fa0a37eb7ed50fda224623ec49e1c91a0af6a1" "d1b4990bd599f5e2186c3f75769a2c5334063e9e541e37514942c27975700370" "d2e9c7e31e574bf38f4b0fb927aaff20c1e5f92f72001102758005e53d77b8c9" "a19265ef7ecc16ac4579abb1635fd4e3e1185dcacbc01b7a43cf7ad107c27ced" "3e160974b9e3e1b53270d1fb5bbaf56f0c689017e177972f72584bf096efc4cc" "b9a06c75084a7744b8a38cb48bc987de10d68f0317697ccbd894b2d0aca06d2b" "3cb2d5a795e1c93d1fbc8360d6ea41f0173aa1366d334b16e1b83b996b8d9ce6" "73bff6f2ef60f8a1238a9ca666235d258e3acdeeed85d092ca532788dd7a33c4" "12b204c8fcce23885ce58e1031a137c5a14461c6c7e1db81998222f8908006af" "5f4e4c9f5de8156f964fdf8a1b8f8f659efbfeff88b38f49ce13953a84272b77" "a866134130e4393c0cad0b4f1a5b0dd580584d9cf921617eee3fd54b6f09ac37" "7666b079fc1493b74c1f0c5e6857f3cf0389696f2d9b8791c892c696ab4a9b64" "53d1bb57dadafbdebb5fbd1a57c2d53d2b4db617f3e0e05849e78a4f78df3a1b" "4e21fb654406f11ab2a628c47c1cbe53bab645d32f2c807ee2295436f09103c6" "2af26301bded15f5f9111d3a161b6bfb3f4b93ec34ffa95e42815396da9cb560" "75c5c39809c52d48cb9dcbf1694bf2d27d5f6fd053777c194e0b69d8e49031c0" default)))
  '(package-selected-packages
    (quote
-    (hasklig-mode cyberpunk-theme kaolin-themes doom-themes list-unicode-display firecode-theme moe-theme elpygen darkokai-theme use-package toxi-theme spaceline-all-the-icons smex smartparens rebecca-theme rainbow-mode rainbow-delimiters pretty-mode org-bullets neotree multiple-cursors multi-term monokai-theme magit jedi jdee ido-vertical-mode ido-ubiquitous hlinum helm haskell-mode gruvbox-theme flx-ido flatland-theme expand-region exec-path-from-shell esup ensime elpy company-jedi cheatsheet base16-theme avy auctex)))
+    (visual-regexp-steroids pdf-tools symon hasklig-mode cyberpunk-theme kaolin-themes doom-themes list-unicode-display firecode-theme moe-theme elpygen darkokai-theme use-package toxi-theme spaceline-all-the-icons smex smartparens rebecca-theme rainbow-mode rainbow-delimiters pretty-mode org-bullets neotree multiple-cursors multi-term monokai-theme magit jedi jdee ido-vertical-mode ido-ubiquitous hlinum helm haskell-mode gruvbox-theme flx-ido flatland-theme expand-region exec-path-from-shell esup ensime elpy company-jedi cheatsheet base16-theme avy auctex)))
  '(safe-local-variable-values (quote ((TeX-command-extra-options . "-shell-escape"))))
  '(spaceline-all-the-icons-separator-type (quote slant))
- '(spaceline-all-the-icons-separators-invert-direction t))
+ '(spaceline-all-the-icons-separators-invert-direction t)
+ '(symon-monitors
+   (quote
+    (symon-darwin-memory-monitor symon-darwin-cpu-monitor symon-darwin-network-rx-monitor symon-darwin-network-tx-monitor symon-linux-battery-monitor))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -426,3 +469,4 @@
 (if (file-exists-p "/Users/davidmazarro/.ciaoroot/master/ciao_emacs/elisp/ciao-site-file.el")
   (load-file "/Users/davidmazarro/.ciaoroot/master/ciao_emacs/elisp/ciao-site-file.el"))
 ; @end(34194479)@ - End of automatically added lines.
+(put 'set-goal-column 'disabled nil)
