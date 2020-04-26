@@ -24,13 +24,6 @@
   (package-refresh-contents)
   (package-install 'use-package))
 
-;; Mandatory packages
-
-(require 'use-package)
-(require 'all-the-icons)
-
-(require 'smartparens-config) ;; Do I need this?
-
 ;; scroll one line at a time (less "jumpy" than defaults)    
 (setq mouse-wheel-scroll-amount '(1 ((shift) . 1))) ;; one line at a time
 (setq mouse-wheel-progressive-speed nil) ;; don't accelerate scrolling
@@ -47,30 +40,6 @@
 ;; This way I can just type 'y' instead of 'yes<RET>' to confirm
 
 (fset 'yes-or-no-p 'y-or-n-p)
-
-;; display “lambda” as “λ”
-(global-prettify-symbols-mode 1)
-
-;; and add it to Haskell mode
-(defun pretty-lambdas-haskell ()
-  (font-lock-add-keywords
-   nil `((,(concat "\\(" (regexp-quote "\\") "\\)")
-          (0 (progn (compose-region (match-beginning 1) (match-end 1)
-                                    ,(make-char 'greek-iso8859-7 107))
-                    nil))))))
-
-(add-hook 'haskell-mode-hook 'pretty-lambdas-haskell)
-
-;; Using the Hasklig font
-
-(set-face-attribute 'default nil
-		    :family "Hasklig"
-                    :height 150
-                    :weight 'normal
-                    :width 'normal)
-
-(use-package hasklig-mode
-  :hook (haskell-mode))
 
 ;; Checks if Tamzen is on the system and uses it as a global font
 
@@ -104,7 +73,37 @@
 
 (column-number-mode t)
 
-;;
+;; Mandatory packages
+
+(require 'use-package)
+(require 'all-the-icons)
+
+;;(require 'smartparens-config) ;; Do I need this?
+
+;; display “lambda” as “λ”
+(global-prettify-symbols-mode 1)
+
+;; and add it to Haskell mode
+(defun pretty-lambdas-haskell ()
+  (font-lock-add-keywords
+   nil `((,(concat "\\(" (regexp-quote "\\") "\\)")
+          (0 (progn (compose-region (match-beginning 1) (match-end 1)
+                                    ,(make-char 'greek-iso8859-7 107))
+                    nil))))))
+
+(add-hook 'haskell-mode-hook 'pretty-lambdas-haskell)
+
+;; Using the Hasklig font
+
+(set-face-attribute 'default nil
+		    :family "Hasklig"
+                    :height 150
+                    :weight 'normal
+                    :width 'normal)
+
+(use-package hasklig-mode
+  :hook (haskell-mode))
+
 
 ;;(define-key key-translation-map (kbd ",") ", ")
 
@@ -116,11 +115,11 @@
 
 ;; Ciao Prolog
 
-(if (file-exists-p "~/.ciaoroot/master/ciao_emacs/elisp/ciao-site-file.el")
-    (load-file "~/.ciaoroot/master/ciao_emacs/elisp/ciao-site-file.el"))
+;; (if (file-exists-p "~/.ciaoroot/master/ciao_emacs/elisp/ciao-site-file.el")
+;;     (load-file "~/.ciaoroot/master/ciao_emacs/elisp/ciao-site-file.el"))
 
-(require 'ciao)
-(add-to-list 'auto-mode-alist '("\\.pl\\'" . ciao-mode)) 
+;; (require 'ciao)
+;; (add-to-list 'auto-mode-alist '("\\.pl\\'" . ciao-mode)) 
 
 ;;;;;; use-package declarations ;;;;;;
 
@@ -272,15 +271,6 @@
   (define-key yas-minor-mode-map (kbd "<tab>") nil)
   (define-key yas-minor-mode-map (kbd "TAB") nil)
   (define-key yas-minor-mode-map (kbd "<C-tab>") 'yas-expand)
-  )
-
-(use-package ensime
-  :ensure t
-  :pin melpa-stable
-  :config
-  (setq scala-indent:align-forms t)
-  (setq scala-indent:align-parameters t)
-  (setq scala-indent:indent-value-expression t)
   )
 
 (use-package auto-complete
@@ -466,7 +456,7 @@
  )
 
 ; @begin(34194479)@ - Do not edit these lines - added automatically!
-(if (file-exists-p "/Users/davidmazarro/.ciaoroot/master/ciao_emacs/elisp/ciao-site-file.el")
-  (load-file "/Users/davidmazarro/.ciaoroot/master/ciao_emacs/elisp/ciao-site-file.el"))
+;; (if (file-exists-p "/Users/davidmazarro/.ciaoroot/master/ciao_emacs/elisp/ciao-site-file.el")
+;;   (load-file "/Users/davidmazarro/.ciaoroot/master/ciao_emacs/elisp/ciao-site-file.el"))
 ; @end(34194479)@ - End of automatically added lines.
 (put 'set-goal-column 'disabled nil)
