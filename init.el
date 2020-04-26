@@ -231,8 +231,6 @@
 (use-package lua-mode
   :ensure t
   :mode "\\.p8\\'"
-  )
-
   :config
   (define-key global-map (kbd "C-c r") 'vr/replace)
   (define-key global-map (kbd "C-c q") 'vr/query-replace)
