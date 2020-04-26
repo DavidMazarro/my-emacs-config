@@ -221,7 +221,7 @@
   (add-hook 'latex-mode-hook 'wrap-region-mode)
   )
 
-(use-package neotree
+(use-package visual-regexp-steroids
   :ensure t
   :init
   (setq neo-theme 'icons)
@@ -232,6 +232,26 @@
   :ensure t
   :mode "\\.p8\\'"
   )
+
+  :config
+  (define-key global-map (kbd "C-c r") 'vr/replace)
+  (define-key global-map (kbd "C-c q") 'vr/query-replace)
+  ;; if you use multiple-cursors, this is for you:
+  (define-key global-map (kbd "C-c m") 'vr/mc-mark)
+  ;; to use visual-regexp-steroids's isearch instead of the built-in regexp isearch, also include the following lines:
+  ;; (define-key esc-map (kbd "C-r") 'vr/isearch-backward) ;; C-M-r
+  ;; (define-key esc-map (kbd "C-s") 'vr/isearch-forward) ;; C-M-s
+  (define-key global-map (kbd "C-r") 'vr/isearch-backward)
+  (define-key global-map (kbd "C-s") 'vr/isearch-forward)
+  )
+
+;; (use-package neotree
+;;   :ensure t
+;;   :init
+;;   (setq neo-theme 'icons)
+;;   (neotree)
+;;   :bind ("M-n t" . neotree-toggle)
+;;   )
 
 (use-package ido
   :ensure
