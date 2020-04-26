@@ -10,6 +10,14 @@ Commands highlighted in /italics/ are custom keybindings
 + /M-n t/ :: Toggles/hides 
 + /C-S-c C-S-c/ :: Toggles multiple-cursors. You have to select a few lines first.
 + /C-;/ :: Comments or uncomments all lines in the selected region.
++ /C-x C-S-k/ :: Kills all buffers except the scratch buffer.
+
++ C-( or <f3> :: Start recording a keyboard macro.
++ C-) or <f4> :: End recording a keyboard macro.
++ C-x C-k n :: Give a name to the last recorded macro.
++ C-x C-k b :: Bind the last recorded macro.
+* Text selection (marking)
++ C-x h :: Marks the whole buffer.
 * Moving the point
 + C-f :: Move the point forward.
 + C-b :: Move the point backwards.
@@ -44,3 +52,14 @@ Commands highlighted in /italics/ are custom keybindings
 
 + S-left/right :: Cycle workflow (nothing -> TODO -> DONE).
 + C-c / :: Search for org thingies in the document.
+
++ C-C C-e :: Export options for the current org file (for example LaTeX exporting, etc.)
+* AUCTeX/LaTeX shortcuts
++ C-c C-c :: Compile current .tex
+
+* Magit shortcuts
++ C-x g :: git status
++ M-n/M-p :: Move between sections at the same level
++ g :: Refresh the status buffer
++ d :: Diff popup
+
