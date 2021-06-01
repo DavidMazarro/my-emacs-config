@@ -97,7 +97,7 @@
 
 (set-face-attribute 'default nil
 		    :family "Hasklig"
-                    :height 180
+                    :height 130
                     :weight 'normal
                     :width 'normal)
 
@@ -144,10 +144,10 @@
 ;;   :config (load-theme 'darkokai t)
 ;;   )
 
-(use-package kaolin-themes
-  :ensure t
-  :config (load-theme 'kaolin-galaxy t)
-  )
+;; (use-package kaolin-themes
+;;   :ensure t
+;;   :config (load-theme 'kaolin-galaxy t)
+;;   )
 
 ;; (use-package doom-themes
 ;;   :ensure t
@@ -156,10 +156,10 @@
 ;;   (doom-themes-org-config)
 ;;   )
 
-;; (use-package gruvbox-theme
-;;   :ensure t
-;;   :config (load-theme 'gruvbox-dark-soft t)
-;;   )
+(use-package gruvbox-theme
+  :ensure t
+  :config (load-theme 'gruvbox-dark-soft t)
+  )
 
 ;;(use-package rebecca-theme
 ;;  :ensure t
@@ -172,14 +172,6 @@
 
 (use-package restart-emacs
   :ensure t
-  )
-
-; symon is for system resource monitoring in the minibuffer 
-(use-package symon
-  :ensure t
-  :init (symon-mode)
-  :config
-  (setq symon-sparkline-type 'boxed)
   )
 
 ;; (use-package visual-regexp-steroids
@@ -452,3 +444,16 @@
 (global-set-key (kbd "C-x C-S-k") 'clean-buffers)
 
 (put 'set-goal-column 'disabled nil)
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(package-selected-packages
+   '(org-bullets spaceline-all-the-icons spaceline expand-region hlinum avy multiple-cursors multi-term magit elpy haskell-mode auctex auto-complete yasnippet smartparens smex ido-completing-read+ flx-ido ido-vertical-mode lua-mode visual-regexp-steroids wrap-region pretty-mode rainbow-mode rainbow-delimiters symon restart-emacs kaolin-themes random-splash-image hasklig-mode use-package all-the-icons)))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
