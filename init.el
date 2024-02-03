@@ -68,6 +68,10 @@
 
 (blink-cursor-mode 0)
 
+;; Shows line numbers in programming languages
+
+(add-hook 'prog-mode-hook #'display-line-numbers-mode)
+
 ;; This sets the Mode Line to display not just the line number
 ;; but also the column number (it's not that useful but ¯\_(ツ)_/¯)
 
@@ -370,14 +374,6 @@
 	 ("M-g M-g" . avy-goto-line))
   )
 
-(use-package hlinum
-  :ensure t
-  :init
-  (global-hl-line-mode 1)
-  (global-linum-mode 1)
-  (hlinum-activate)
-  )
-
 (use-package expand-region
   :ensure t
   :bind ("C-=" . er/expand-region)
@@ -450,7 +446,7 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
-   '(org-bullets spaceline-all-the-icons spaceline expand-region hlinum avy multiple-cursors multi-term magit elpy haskell-mode auctex auto-complete yasnippet smartparens smex ido-completing-read+ flx-ido ido-vertical-mode lua-mode visual-regexp-steroids wrap-region pretty-mode rainbow-mode rainbow-delimiters symon restart-emacs kaolin-themes random-splash-image hasklig-mode use-package all-the-icons)))
+   '(org-bullets spaceline-all-the-icons spaceline expand-region avy multiple-cursors multi-term magit elpy haskell-mode auctex auto-complete yasnippet smartparens smex ido-completing-read+ flx-ido ido-vertical-mode lua-mode visual-regexp-steroids wrap-region pretty-mode rainbow-mode rainbow-delimiters symon restart-emacs kaolin-themes random-splash-image hasklig-mode use-package all-the-icons)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
